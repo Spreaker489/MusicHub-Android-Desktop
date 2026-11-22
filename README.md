@@ -16,12 +16,9 @@ MusicHub 1.2.1 este o aplicație Android care aduce playerul web MusicHub într-
 
 Aplicația include comenzi pentru piesa anterioară, redare/pauză și piesa următoare, precum și afișarea informațiilor despre melodie și a copertei albumului în notificare și pe ecranul de blocare, atunci când playerul și dispozitivul permit acest lucru.
 
-Configurația proiectului folosește `minSdk 24` (Android 7.0 sau mai nou), incluzând Android 8.0+. Sunt prevăzute trei variante de distribuție:
+Configurația proiectului folosește `minSdk 24` (Android 7.0 sau mai nou), incluzând Android 8.0+.
 - **Classic – Universal APK:** pachet universal pentru instalare directă.
-- **Slim – ABI APK:** pachete separate după arhitectura procesorului; trebuie ales fișierul compatibil cu dispozitivul.
-- **Google Play – AAB:** pachet pentru publicare prin Google Play, nu pentru instalare directă.
 
-Variantele Slim și AAB trebuie verificate pe dispozitive reale înainte de a fi considerate stabile. Nu este garantată o anumită dimensiune finală a fișierului sau a instalării.
 
 **Versiune documentată:** 1.2.1  
 **Dezvoltator:** marius_489_spk
@@ -32,12 +29,9 @@ MusicHub 1.2.1 brings the MusicHub web player into a dedicated Android applicati
 
 The app includes previous-track, play/pause, and next-track controls, together with track information and album artwork in the media notification and on the lock screen whenever supported by the player and device.
 
-The project is configured with `minSdk 24` (Android 7.0 or later), including Android 8.0+. Three distribution options are planned:
+The project is configured with `minSdk 24` (Android 7.0 or later), including Android 8.0+.
 - **Classic – Universal APK:** a universal package for direct installation.
-- **Slim – ABI APKs:** separate packages for specific CPU architectures; choose the package matching the device.
-- **Google Play – AAB:** a bundle for Google Play distribution, not for direct installation.
 
-The Slim and AAB variants must be validated on real devices before being considered stable. No specific final download or installation size is guaranteed.
 
 **Documented version:** 1.2.1  
 **Developer:** marius_489_spk
