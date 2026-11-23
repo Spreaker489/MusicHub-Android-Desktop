@@ -59,9 +59,9 @@ jobs:
       - name: Verify source files
         shell: pwsh
         run: |
-          if (!(Test-Path "windows/package.json")) { throw "windows/package.json is missing" }
-          if (!(Test-Path "windows/scripts/make-icon.js")) { throw "Icon generator is missing" }
-          if (!(Test-Path "icon.png")) { throw "Root icon.png is missing" }
+          if (!(Test-Path "package.json")) { throw "windows/package.json is missing" }
+          if (!(Test-Path "scripts/make-icon.js")) { throw "Icon generator is missing" }
+          if (!(Test-Path "../icon.png")) { throw "Root icon.png is missing" }
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
