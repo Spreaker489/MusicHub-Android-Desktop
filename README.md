@@ -10,7 +10,7 @@
   <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">Toate versiunile (Releases)</a>
 </p>
 
-**Dezvoltator:** Spreaker489  
+**Dezvoltator:** Spreaker489 (marius_489_spk)  
 **Versiune:** 1.2.1  
 **Platformă:** Android  
 **Dimensiune:** aproximativ 320 MiB (335,5 MB)
@@ -38,7 +38,7 @@ APK-ul este disponibil în secțiunea [Releases](https://github.com/Spreaker489/
   <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">All versions (Releases)</a>
 </p>
 
-**Developer:** Spreaker489  
+**Developer:** Spreaker489 (marius_489_spk)  
 **Version:** 1.2.1  
 **Platform:** Android  
 **Size:** Approximately 320 MiB (335.5 MB)
