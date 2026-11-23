@@ -89,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
                     MusicPlaybackService svc = MusicPlaybackService.getInstance();
                     if (svc != null) svc.updatePlaybackState(false);
                 }
+                @Override public void onPositionState(@NonNull GeckoSession s, @NonNull MediaSession media,
+                                                       @NonNull MediaSession.PositionState state) {
+                    activeMedia = media;
+                    MusicPlaybackService svc = MusicPlaybackService.getInstance();
+                    if (svc != null) {
+                        svc.updatePositionState(state.duration, state.position, state.playbackRate);
+                    }
+                }
             });
             session.open(runtime);
             // Documented zrok interstitial opt-in only; it does not bypass authentication.
