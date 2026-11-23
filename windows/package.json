@@ -1,7 +1,7 @@
 {
-  "name": "musichub-classic-windows",
+  "name": "musichub-desktop-windows",
   "version": "1.2.1",
-  "description": "MusicHub Classic desktop client for Windows",
+  "description": "MusicHub Desktop client for Windows",
   "main": "main.js",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "build": {
     "appId": "ro.musichub.classic",
-    "productName": "MusicHub Classic",
+    "productName": "MusicHub Desktop",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -33,14 +33,14 @@
         }
       ],
       "icon": "build/icon.ico",
-      "artifactName": "MusicHub-Classic-${version}-${arch}.${ext}"
+      "artifactName": "MusicHub-Desktop-${version}-${arch}.${ext}"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "MusicHub Classic"
+      "shortcutName": "MusicHub Desktop"
     }
   }
 }
