@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - musichub-classic-optimization
   pull_request:
     branches:
       - main
