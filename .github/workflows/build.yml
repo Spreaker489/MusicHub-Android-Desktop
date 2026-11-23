@@ -51,9 +51,9 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
-      - name: Upload optimized release APK (unsigned)
+      - name: Upload optimized release APK (debug-signed for testing)
         uses: actions/upload-artifact@v4
         with:
-          name: musichub-classic-release-unsigned
+          name: musichub-classic-release-debug-signed
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
