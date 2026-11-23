@@ -6,8 +6,6 @@
 
 <p align="center">
   <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/download/v1.2.1/MusicHub-1.2.1-Classic-Universal.apk"><strong>⬇ Descarcă MusicHub Classic APK</strong></a>
-  ·
-  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">Toate versiunile (Releases)</a>
 </p>
 
 **Dezvoltator:** Spreaker489 (marius_489_spk)  
@@ -26,7 +24,7 @@ MusicHub Classic aduce playerul web MusicHub într-o aplicație Android dedicat�
 Poți asculta muzică și utiliza comenzile media din notificare și de pe ecranul de blocare, atunci când acestea sunt acceptate de player și de versiunea Android.
 
 ### Descărcare
-APK-ul este disponibil în secțiunea [Releases](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1).
+Descarcă APK-ul folosind linkul de mai sus, din pagina acestei versiuni: [MusicHub 1.2.1](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1).
 
 ---
 
@@ -34,8 +32,6 @@ APK-ul este disponibil în secțiunea [Releases](https://github.com/Spreaker489/
 
 <p align="center">
   <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/download/v1.2.1/MusicHub-1.2.1-Classic-Universal.apk"><strong>⬇ Download MusicHub Classic APK</strong></a>
-  ·
-  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">All versions (Releases)</a>
 </p>
 
 **Developer:** Spreaker489 (marius_489_spk)  
@@ -54,4 +50,4 @@ MusicHub Classic brings the MusicHub web player into a dedicated Android app, bu
 You can listen to music and use media controls from the notification and lock screen, where supported by the player and Android version.
 
 ### Download
-The APK is available in the [Releases](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1) section of this GitHub repository.
+Download the APK using the link above from this version's page: [MusicHub 1.2.1](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1).
