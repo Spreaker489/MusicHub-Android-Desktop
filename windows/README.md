@@ -4,10 +4,10 @@ MusicHub Desktop opens the official MusicHub web application in a dedicated desk
 
 ## Supported systems and architectures
 
-- Windows 7, 8 and 8.1: x86 (32-bit) and x64 (64-bit)
-- Windows 10 and 11: x86 (32-bit, where supported by the OS) and x64
+- Windows 7, 8 and 8.1: x64 (64-bit)
+- Windows 10 and 11: x64 (64-bit)
 
-The installers are generated separately for **ia32** and **x64**.
+Only the **x64** installer is built and published. No 32-bit installer is provided.
 
 ## Build locally
 
