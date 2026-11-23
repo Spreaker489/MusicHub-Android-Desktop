@@ -95,7 +95,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     @Override protected void onDestroy() {
-        // The static Gecko session remains open to support background web audio.
+        // Detach the persistent GeckoSession from this Activity's view before
+        // the Activity is destroyed. Keep the session/runtime alive so audio
+        // playback and its media state can continue in the background.
+        GeckoView view = findViewById(R.id.geckoview);
+        if (view != null) {
+            view.setSession(null);
+        }
         super.onDestroy();
     }
 }
