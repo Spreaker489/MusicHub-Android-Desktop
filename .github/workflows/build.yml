@@ -56,19 +56,7 @@ jobs:
 
       - name: Replace APK asset in existing v1.2.1 Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v1.2.1
-          name: MusicHub 1.2.1
-          files: release/MusicHub-1.2.1-Classic-Universal.apk
-          overwrite_files: true
-          body: |
-            # MusicHub 1.2.1
-
-            **Download:** MusicHub-1.2.1-Classic-Universal.apk (Debug build from main).
-
-            **APK size:** ${{ steps.apk.outputs.size_human }} (${{ steps.apk.outputs.size_bytes }} bytes).
-
-            This Release contains the APK file itself, not a ZIP archive of the Actions artifact.
-
-            Built by GitHub Actions. Physical-device playback and background behavior have not been certified for this build.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v1.2.1 release/MusicHub-1.2.1-Classic-Universal.apk --clobber
