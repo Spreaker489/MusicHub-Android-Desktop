@@ -32,8 +32,13 @@ jobs:
         working-directory: windows
 
     steps:
-      - name: Checkout
+      - name: Checkout only Windows app files
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            windows/
+            icon.png
+          sparse-checkout-cone-mode: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
