@@ -1,5 +1,9 @@
 # MusicHub V1.2.1 Gecko
 
+<p align="center">
+  <img src="icon.png" alt="MusicHub app icon" width="180">
+</p>
+
 MusicHub Classic is an Android wrapper for the MusicHub web player using Mozilla GeckoView.
 
 - Android 7.0 (API 24) or newer.
