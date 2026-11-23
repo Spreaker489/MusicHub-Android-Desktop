@@ -86,8 +86,10 @@ jobs:
           path: windows/dist/*.exe
           if-no-files-found: error
 
-      - name: Publish installer to v1.2.1 release
+      - name: Publish installer and update v1.2.1 release notes
         if: github.event_name == 'push' && github.ref == 'refs/heads/android'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload v1.2.1 dist/*.exe --clobber --repo ${{ github.repository }}
+        run: |
+          gh release upload v1.2.1 dist/*.exe --clobber --repo ${{ github.repository }}
+          gh release edit v1.2.1 --notes-file release-notes.md --repo ${{ github.repository }}
