@@ -9,7 +9,7 @@ function createWindow() {
     height: 820,
     minWidth: 800,
     minHeight: 600,
-    title: "MusicHub Classic",
+    title: "MusicHub Desktop",
     icon: path.join(__dirname, "build", "icon.ico"),
     autoHideMenuBar: true,
     webPreferences: {
