@@ -10,11 +10,20 @@ MusicHub Classic is an Android wrapper for the MusicHub web player using Mozilla
 
 ## Build and distribution
 
-The stable source is maintained on the `main` branch. GitHub Actions builds the Debug APK only using `gradle assembleDebug --no-daemon --stacktrace`.
+The `main` branch is the single source of truth. GitHub Actions builds the **Debug APK only** with `gradle assembleDebug --no-daemon --stacktrace`.
 
-On every push to `main`, the workflow builds the APK, publishes it as a GitHub Actions artifact, and replaces the asset in the existing GitHub Release `v1.2.1`. The Release receives the `.apk` file itself, not the Actions artifact ZIP.
+On pushes to `main`, the workflow:
+1. Builds the universal Debug APK.
+2. Uploads `musichub-classic-debug` as a GitHub Actions artifact (downloaded by GitHub as a ZIP containing the APK).
+3. Replaces the APK asset in the existing GitHub Release `v1.2.1`.
 
-The published file is named `MusicHub-1.2.1-Classic-Universal.apk`. Each Release note records the generated APK size in both human-readable units and exact bytes. No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately.
+The Release contains the `.apk` file directly, not a ZIP. The current published file is:
+
+- **File:** `MusicHub-1.2.1-Classic-Universal.apk`
+- **Size:** 335,524,315 bytes (about 320 MiB / 335.5 MB)
+- **Download:** [GitHub Release v1.2.1](https://github.com/Spreaker489/MusicHub-V1.2.1-Gecko/releases/tag/v1.2.1)
+
+No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately for each new build; a successful CI build alone does not prove device compatibility.
 
 ## Despre aplicație
 
@@ -28,7 +37,11 @@ Aplicația oferă comenzi media în notificare și pe ecranul de blocare, atunci
 
 ### Compilare și distribuție
 
-Workflow-ul GitHub Actions compilează numai varianta Debug. La fiecare actualizare pe `main`, APK-ul este publicat ca artefact și înlocuiește fișierul APK din Release-ul existent `v1.2.1`. În Release se încarcă fișierul `.apk` direct, nu arhiva ZIP. Notele Release afișează dimensiunea APK-ului în format lizibil și în bytes. Nu se execută build Release sau optimizări de dimensiune.
+Ramura `main` este sursa unică de cod. GitHub Actions compilează numai varianta **Debug**. La fiecare push pe `main`, workflow-ul compilează APK-ul universal, îl încarcă drept artefact Actions (`musichub-classic-debug`; descărcarea Actions este un ZIP care conține APK-ul) și înlocuiește APK-ul din Release-ul existent `v1.2.1`.
+
+În Release este publicat fișierul `.apk` direct, nu arhiva ZIP. APK-ul publicat în prezent are **335.524.315 bytes** (aproximativ **320 MiB / 335,5 MB**).
+
+Nu se execută build Release, R8 shrinking sau optimizări pentru reducerea dimensiunii. Un build CI reușit nu înlocuiește testarea pe dispozitive fizice.
 
 ## About the app
 
@@ -36,10 +49,14 @@ MusicHub Classic brings the MusicHub web player into a dedicated Android applica
 
 The app provides media controls in the notification and on the lock screen when supported by the player and Android version. The project uses `minSdk 24` (Android 7.0 or newer).
 
-**Edition:** MusicHub Classic – universal APK   
+**Edition:** MusicHub Classic – universal APK  
 **Documented version:** 1.2.1  
 **Developer:** marius_489_spk
 
 ### Build and distribution
 
-GitHub Actions builds the Debug variant only. On each update to `main`, the APK is published as a workflow artifact and replaces the APK file in the existing `v1.2.1` Release. The Release receives the `.apk` file directly, not the Actions artifact ZIP. Release notes show the APK size in readable units and exact bytes. No Release build or APK size optimization is performed.
+The `main` branch is the single source of truth. GitHub Actions builds the **Debug** variant only. On each push to `main`, the workflow builds the universal APK, uploads it as the `musichub-classic-debug` Actions artifact (downloaded as a ZIP containing the APK), and replaces the APK asset in the existing `v1.2.1` Release.
+
+The Release contains the `.apk` file directly, not a ZIP. The currently published APK is **335,524,315 bytes** (about **320 MiB / 335.5 MB**).
+
+No Release build, R8 shrinking, or APK size optimization is performed. A successful CI build does not replace physical-device testing.
