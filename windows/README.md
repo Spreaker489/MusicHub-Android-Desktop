@@ -1,6 +1,6 @@
-# MusicHub Classic for Windows
+# MusicHub Desktop for Windows
 
-The Windows desktop client opens the official MusicHub web application in a dedicated desktop window.
+MusicHub Desktop opens the official MusicHub web application in a dedicated desktop window.
 
 ## Supported systems and architectures
 
