@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -37,12 +37,32 @@ jobs:
       - name: Build Debug APK only
         run: gradle assembleDebug --no-daemon --stacktrace
 
-      - name: Report Debug APK size
-        run: du -h app/build/outputs/apk/debug/*.apk
+      - name: Prepare APK for GitHub Release
+        run: |
+          mkdir -p release
+          cp app/build/outputs/apk/debug/*.apk release/MusicHub-1.2.1-Classic-Universal.apk
+          du -h release/*.apk
 
-      - name: Upload Debug APK
+      - name: Upload Debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: musichub-classic-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: release/MusicHub-1.2.1-Classic-Universal.apk
           if-no-files-found: error
+
+      - name: Replace APK in existing v1.2.1 GitHub Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > release-notes.md <<'EOF'
+# MusicHub 1.2.1
+
+**Download:** MusicHub-1.2.1-Classic-Universal.apk (Debug build from main).
+
+This Release contains the APK file itself, not a ZIP archive of the Actions artifact.
+
+Built by GitHub Actions. Physical-device playback and background behavior have not been certified for this build.
+EOF
+          gh release upload v1.2.1 release/MusicHub-1.2.1-Classic-Universal.apk --clobber
+          gh release edit v1.2.1 --notes-file release-notes.md
