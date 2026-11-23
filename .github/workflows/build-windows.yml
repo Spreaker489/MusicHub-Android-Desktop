@@ -2,7 +2,7 @@ name: Build Windows desktop
 
 on:
   push:
-    branches: [main]
+    branches: [android]
     paths:
       - "windows/**"
       - "icon.png"
@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [ia32, x64]
+        arch: [x64]
 
     defaults:
       run:
@@ -87,7 +87,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish installer to v1.2.1 release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/android'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload v1.2.1 dist/*.exe --clobber --repo ${{ github.repository }}
