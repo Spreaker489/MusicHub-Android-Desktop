@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - musichub-classic-optimization
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
