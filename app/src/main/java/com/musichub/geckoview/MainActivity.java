@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private static GeckoRuntime runtime;
     private static GeckoSession session;
     private static MediaSession activeMedia;
+    private static double pendingRestorePositionSeconds = -1.0;
+    private static boolean restoreAttempted = false;
 
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
                     activeMedia = media;
                     MusicPlaybackService svc = MusicPlaybackService.getInstance();
                     if (svc != null) {
+                        if (!restoreAttempted) {
+                            long savedPosition = svc.getSavedPositionForTrack(metadata.title, metadata.artist);
+                            if (savedPosition > 0L) pendingRestorePositionSeconds = savedPosition / 1000.0;
+                            restoreAttempted = true;
+                        }
                         svc.updateMetadata(metadata.title, metadata.artist, metadata.album);
                         if (metadata.artwork != null) {
                             metadata.artwork.getBitmap(512).accept(
@@ -93,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
                                                        @NonNull MediaSession.PositionState state) {
                     activeMedia = media;
                     MusicPlaybackService svc = MusicPlaybackService.getInstance();
+                    if (pendingRestorePositionSeconds >= 0.0 && state.duration > pendingRestorePositionSeconds) {
+                        // Restore only when the site's current track matches the last saved title/artist.
+                        // Seeking does not start playback.
+                        media.seekTo(pendingRestorePositionSeconds, false);
+                        pendingRestorePositionSeconds = -1.0;
+                    }
                     if (svc != null) {
                         svc.updatePositionState(state.duration, state.position, state.playbackRate);
                     }
