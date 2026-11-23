@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     activeMedia = media;
                     MusicPlaybackService svc = MusicPlaybackService.getInstance();
                     if (svc != null) {
-                        if (!restoreAttempted) {
+                        if (!restoreAttempted && metadata.title != null &&
+                                !metadata.title.isEmpty() && !"MusicHub".equals(metadata.title)) {
                             long savedPosition = svc.getSavedPositionForTrack(metadata.title, metadata.artist);
                             if (savedPosition > 0L) pendingRestorePositionSeconds = savedPosition / 1000.0;
                             restoreAttempted = true;
