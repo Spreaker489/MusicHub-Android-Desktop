@@ -1,4 +1,4 @@
-# MusicHub V1.2.1 Gecko
+# MusicHub V1.2.1 Gecko Android
 
 <p align="center">
   <img src="icon.png" alt="MusicHub app icon" width="180">
