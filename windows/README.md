@@ -23,6 +23,6 @@ Installers are written to `windows/dist/`.
 
 ## Important compatibility and security note
 
-This build uses Electron 22.3.27 because it is the final Electron major line supporting Windows 7/8/8.1 and 32-bit Windows. Electron 22 is end-of-life and no longer receives Chromium/Electron security fixes. Use this legacy build only if compatibility with older Windows versions is essential; avoid using it for sensitive browsing or entering passwords you would not otherwise expose to an outdated browser engine.
+This build uses Electron 22.3.27 because it is the final Electron major line supporting Windows 7/8/8.1. Electron 22 is end-of-life and no longer receives Chromium/Electron security fixes. Use this legacy build only if compatibility with older Windows versions is essential; avoid using it for sensitive browsing or entering passwords you would not otherwise expose to an outdated browser engine.
 
 The Windows client is separate from the Android application and does not change the Android build.
