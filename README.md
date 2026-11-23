@@ -3,45 +3,43 @@
 MusicHub Classic is an Android wrapper for the MusicHub web player using Mozilla GeckoView.
 
 - Android 7.0 (API 24) or newer.
-- One Classic APK, retaining ARM and x86 ABI support.
+- One universal Classic APK with ARM and x86 ABI support.
 - GeckoView adapts to phone and tablet screen sizes.
-- Foreground media service exposes lock-screen and notification transport controls.
-- Uses zrok's documented `skip_zrok_interstitial: 1` request header only.
+- Foreground media service provides notification and lock-screen controls when supported by Android and the player.
+- Uses zrok's documented `skip_zrok_interstitial: 1` request header.
 
-## Build and optimization
+## Build and distribution
 
-The `musichub-classic-optimization` branch is used for safe packaging work. The stable `main` branch is not changed by this optimization work until the APK has been tested.
+The stable source is maintained on the `main` branch. GitHub Actions builds the Debug APK only using `gradle assembleDebug --no-daemon --stacktrace`.
 
-The Classic build:
-- Keeps all four supported ABIs (`armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64`) in one APK.
-- Compresses native GeckoView libraries inside the APK. Android extracts these libraries during installation, so the downloaded APK can be smaller while installed storage usage may remain similar.
-- Enables R8 code shrinking and resource shrinking for the release build.
-- Keeps GeckoView classes conservatively to reduce the risk of breaking its runtime/JNI integration.
+On every push to `main`, the workflow builds the APK, publishes it as a GitHub Actions artifact, and replaces the asset in the existing GitHub Release `v1.2.1`. The Release receives the `.apk` file itself, not the Actions artifact ZIP.
 
-GitHub Actions builds:
-- `musichub-classic-debug`: installable debug APK for functional testing.
-- `musichub-classic-release-unsigned`: optimized release APK; it must be signed with the developer's own release key before distribution.
-
-The workflow reports the generated APK file sizes. Do not treat the release build as validated until background playback, media notifications, lock-screen artwork, and transport controls have been tested on a physical Android device.
+The published file is named `MusicHub-1.2.1-Classic-Universal.apk`. No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately.
 
 ## Despre aplicație
 
-MusicHub 1.2.1 aduce playerul web MusicHub într-o aplicație Android dedicată, folosind motorul Mozilla GeckoView.
+MusicHub Classic aduce playerul web MusicHub într-o aplicație Android dedicată, folosind motorul Mozilla GeckoView.
 
-Aplicația include comenzi pentru piesa anterioară, redare/pauză și piesa următoare, precum și afișarea informațiilor despre melodie și a copertei albumului în notificare și pe ecranul de blocare, atunci când playerul și dispozitivul permit acest lucru.
+Aplicația oferă comenzi media în notificare și pe ecranul de blocare, atunci când playerul și versiunea Android le permit. Proiectul folosește `minSdk 24` (Android 7.0 sau mai nou).
 
-Configurația proiectului folosește `minSdk 24` (Android 7.0 sau mai nou).
-
-**Ediție:** MusicHub Classic – un singur APK universal  
+**Ediție:** MusicHub Classic – APK universal  
 **Versiune documentată:** 1.2.1  
 **Dezvoltator:** marius_489_spk
 
+### Compilare și distribuție
+
+Workflow-ul GitHub Actions compilează numai varianta Debug. La fiecare actualizare pe `main`, APK-ul este publicat ca artefact și înlocuiește fișierul APK din Release-ul existent `v1.2.1`. În Release se încarcă fișierul `.apk` direct, nu arhiva ZIP. Nu se execută build Release sau optimizări de dimensiune.
+
 ## About the app
 
-MusicHub 1.2.1 brings the MusicHub web player into a dedicated Android application powered by Mozilla GeckoView.
+MusicHub Classic brings the MusicHub web player into a dedicated Android application powered by Mozilla GeckoView.
 
-The app includes previous-track, play/pause, and next-track controls, together with track information and album artwork in the media notification and on the lock screen whenever supported by the player and device.
+The app provides media controls in the notification and on the lock screen when supported by the player and Android version. The project uses `minSdk 24` (Android 7.0 or newer).
 
-**Edition:** MusicHub Classic – one universal APK  
+**Edition:** MusicHub Classic – universal APK   
 **Documented version:** 1.2.1  
 **Developer:** marius_489_spk
+
+### Build and distribution
+
+GitHub Actions builds the Debug variant only. On each update to `main`, the APK is published as a workflow artifact and replaces the APK file in the existing `v1.2.1` Release. The Release receives the `.apk` file directly, not the Actions artifact ZIP. No Release build or APK size optimization is performed.
