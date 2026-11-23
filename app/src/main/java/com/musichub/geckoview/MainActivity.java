@@ -38,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
             GeckoSessionSettings settings = new GeckoSessionSettings.Builder()
                     .userAgentOverride("MusicHubAndroid/1.2.1").build();
             session = new GeckoSession(settings);
+            // Recover automatically if Android or Gecko kills the content process
+            // while MusicHub is in the background. GeckoView documents that the
+            // session is closed after onCrash/onKill and can be reopened.
+            session.setContentDelegate(new GeckoSession.ContentDelegate() {
+                @Override public void onCrash(@NonNull GeckoSession crashedSession) {
+                    recoverGeckoSession(crashedSession);
+                }
+                @Override public void onKill(@NonNull GeckoSession killedSession) {
+                    recoverGeckoSession(killedSession);
+                }
+            });
             session.setMediaSessionDelegate(new MediaSession.Delegate() {
                 @Override public void onActivated(@NonNull GeckoSession s, @NonNull MediaSession media) {
                     activeMedia = media;
@@ -94,6 +105,19 @@ public class MainActivity extends AppCompatActivity {
             @Override public void previous() { MAIN.post(() -> { if (activeMedia != null) activeMedia.previousTrack(); }); }
         });
     }
+    private void recoverGeckoSession(@NonNull GeckoSession crashedSession) {
+        // ContentDelegate callbacks run on the UI thread.
+        if (runtime == null || crashedSession != session) return;
+        try {
+            crashedSession.open(runtime);
+            crashedSession.load(new GeckoSession.Loader().uri(HOME_URL)
+                    .headerFilter(GeckoSession.HEADER_FILTER_UNRESTRICTED_UNSAFE)
+                    .additionalHeaders(Collections.singletonMap("skip_zrok_interstitial", "1")));
+        } catch (RuntimeException error) {
+            android.util.Log.e("MusicHub", "Could not recover GeckoView after content process exit", error);
+        }
+    }
+
     @Override protected void onDestroy() {
         // Detach the persistent GeckoSession from this Activity's view before
         // the Activity is destroyed. Keep the session/runtime alive so audio
