@@ -34,26 +34,15 @@ jobs:
           cp icon.png app/src/main/res/drawable-nodpi/ic_launcher.png
           file app/src/main/res/drawable-nodpi/ic_launcher.png
 
-      - name: Build Classic debug and optimized release APKs
-        run: gradle assembleDebug assembleRelease --no-daemon --stacktrace
+      - name: Build Debug APK only
+        run: gradle assembleDebug --no-daemon --stacktrace
 
-      - name: Report APK sizes
-        run: |
-          echo "APK output sizes:"
-          find app/build/outputs/apk -type f -name '*.apk' -print0 |
-            sort -z |
-            xargs -0 -r du -h
+      - name: Report Debug APK size
+        run: du -h app/build/outputs/apk/debug/*.apk
 
-      - name: Upload installable debug APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: musichub-classic-debug
           path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
-
-      - name: Upload optimized release APK (debug-signed for testing)
-        uses: actions/upload-artifact@v4
-        with:
-          name: musichub-classic-release-debug-signed
-          path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
