@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.application'
 }
+
 android {
     namespace 'com.musichub.geckoview'
     compileSdk 34
+
     defaultConfig {
         applicationId 'com.musichub.geckoview'
         minSdk 24
@@ -11,24 +13,45 @@ android {
         versionCode 3
         versionName '1.2.1'
     }
-    // Build a device-specific APK so each phone gets only its own
-    // GeckoView native libraries instead of all CPU architectures.
+
+    // Classic is one installable APK. Keep all four ABIs for broad device
+    // compatibility; compress native libraries to reduce the APK download size.
     splits {
         abi {
-            enable true
-            reset()
-            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-            universalApk false
+            enable false
         }
     }
+
+    packaging {
+        jniLibs {
+            // Legacy packaging compresses GeckoView's large native .so files
+            // inside the APK. Android extracts them during installation.
+            useLegacyPackaging true
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 }
+
 configurations.configureEach {
     resolutionStrategy.force 'androidx.core:core:1.12.0'
 }
+
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core:1.12.0'
