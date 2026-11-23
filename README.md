@@ -14,8 +14,7 @@
 **Dimensiune:** aproximativ 66 MiB (69,2 MB)
 
 ### Compatibilitate
-- Windows 7, 8 și 8.1 pe 64 de biți.
-- Windows 10 și 11 pe 64 de biți.
+- Windows 7/8/8.1/10/11 pe 64 de biți.
 - Este disponibilă numai ediția x64; nu există instalator pe 32 de biți.
 
 ### Despre aplicație
@@ -40,8 +39,7 @@ Descarcă instalatorul Windows x64 folosind linkul de mai sus. Fișierul `.exe` 
 **Size:** approximately 66 MiB (69.2 MB)
 
 ### Compatibility
-- 64-bit Windows 7, 8 and 8.1.
-- 64-bit Windows 10 and 11.
+- 64-bit Windows 7/8/8.1/10/11
 - The x64 edition is the only available build; there is no 32-bit installer.
 
 ### About the app
