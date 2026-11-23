@@ -42,6 +42,7 @@ jobs:
           mkdir -p release
           cp app/build/outputs/apk/debug/*.apk release/MusicHub-1.2.1-Classic-Universal.apk
           du -h release/*.apk
+          stat -c 'APK_SIZE_BYTES=%s' release/MusicHub-1.2.1-Classic-Universal.apk
 
       - name: Upload Debug APK artifact
         uses: actions/upload-artifact@v4
@@ -55,10 +56,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cat > release-notes.md <<'EOF'
+          APK_SIZE_HUMAN=$(du -h release/MusicHub-1.2.1-Classic-Universal.apk | cut -f1)
+          APK_SIZE_BYTES=$(stat -c '%s' release/MusicHub-1.2.1-Classic-Universal.apk)
+          cat > release-notes.md <<EOF
 # MusicHub 1.2.1
 
 **Download:** MusicHub-1.2.1-Classic-Universal.apk (Debug build from main).
+
+**APK size:** ${APK_SIZE_HUMAN} (${APK_SIZE_BYTES} bytes).
 
 This Release contains the APK file itself, not a ZIP archive of the Actions artifact.
 
