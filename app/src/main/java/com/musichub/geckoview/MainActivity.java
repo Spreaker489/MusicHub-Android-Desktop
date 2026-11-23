@@ -118,6 +118,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override protected void onResume() {
+        super.onResume();
+        if (session != null) {
+            session.setActive(true);
+            session.setFocused(true);
+        }
+    }
+
+    @Override protected void onPause() {
+        if (session != null) session.setFocused(false);
+        super.onPause();
+    }
+
+    @Override protected void onStop() {
+        // The page is no longer visible, but keep the Gecko session alive so
+        // background audio and notification controls can continue.
+        if (session != null) session.setActive(false);
+        super.onStop();
+    }
+
     @Override protected void onDestroy() {
         // Detach the persistent GeckoSession from this Activity's view before
         // the Activity is destroyed. Keep the session/runtime alive so audio
