@@ -1,31 +1,48 @@
-name: Build MusicHub APK
+name: Build MusicHub Classic
+
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - musichub-classic-optimization
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.4'
-      - name: Install uploaded MusicHub launcher icon
+
+      - name: Install MusicHub launcher icon
         run: |
           mkdir -p app/src/main/res/drawable-nodpi
           cp icon.png app/src/main/res/drawable-nodpi/ic_launcher.png
           file app/src/main/res/drawable-nodpi/ic_launcher.png
-      - name: Build debug APK
+
+      - name: Build Debug APK only
         run: gradle assembleDebug --no-daemon --stacktrace
-      - uses: actions/upload-artifact@v4
+
+      - name: Report Debug APK size
+        run: du -h app/build/outputs/apk/debug/*.apk
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
         with:
-          name: musichub-rebuild-debug
+          name: musichub-classic-debug
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error

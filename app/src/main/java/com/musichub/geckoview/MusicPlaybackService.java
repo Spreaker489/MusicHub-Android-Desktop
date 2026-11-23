@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -20,6 +21,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 public class MusicPlaybackService extends Service {
     private static final String CHANNEL = "musichub_playback";
     private static final int NOTIFICATION_ID = 71;
+    private static final String PREFS = "playback_resume";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_ARTIST = "artist";
+    private static final String KEY_POSITION = "position_ms";
     private static MusicPlaybackService instance;
     private static CommandListener listener;
     private MediaSessionCompat mediaSession;
@@ -28,6 +33,9 @@ public class MusicPlaybackService extends Service {
     private String album = "";
     private Bitmap artwork;
     private boolean playing;
+    private long durationMs;
+    private long positionMs;
+    private float playbackSpeed = 1f;
 
     public interface CommandListener { void play(); void pause(); void next(); void previous(); }
     public static void setCommandListener(CommandListener value) { listener = value; }
@@ -56,6 +64,8 @@ public class MusicPlaybackService extends Service {
         title = t == null || t.isEmpty() ? "MusicHub" : t;
         artist = a == null ? "" : a;
         album = al == null ? "" : al;
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+                .putString(KEY_TITLE, title).putString(KEY_ARTIST, artist).apply();
         publishMetadata();
         refresh();
     }
@@ -70,7 +80,8 @@ public class MusicPlaybackService extends Service {
         MediaMetadataCompat.Builder metadata = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, artist)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album);
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, durationMs);
         if (artwork != null) {
             metadata.putBitmap(MediaMetadataCompat.METADATA_KEY_ART, artwork)
                     .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, artwork);
@@ -78,15 +89,46 @@ public class MusicPlaybackService extends Service {
         mediaSession.setMetadata(metadata.build());
     }
 
+    public long getSavedPositionForTrack(String trackTitle, String trackArtist) {
+        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        String savedTitle = prefs.getString(KEY_TITLE, "");
+        String savedArtist = prefs.getString(KEY_ARTIST, "");
+        if (trackTitle == null || trackTitle.isEmpty() || !trackTitle.equals(savedTitle)) return -1L;
+        if (trackArtist != null && !trackArtist.isEmpty() && !savedArtist.isEmpty() &&
+                !trackArtist.equals(savedArtist)) return -1L;
+        long saved = prefs.getLong(KEY_POSITION, 0L);
+        return saved >= 5000L ? saved : -1L;
+    }
+
+    public void updatePositionState(double durationSeconds, double positionSeconds, double rate) {
+        if (!Double.isFinite(durationSeconds) || durationSeconds <= 0 ||
+                !Double.isFinite(positionSeconds) || positionSeconds < 0 ||
+                positionSeconds > durationSeconds || !Double.isFinite(rate) || rate == 0) {
+            return;
+        }
+        durationMs = Math.round(durationSeconds * 1000.0);
+        positionMs = Math.round(positionSeconds * 1000.0);
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putLong(KEY_POSITION, positionMs).apply();
+        playbackSpeed = (float) rate;
+        publishMetadata();
+        publishPlaybackState();
+        refresh();
+    }
+
     public void updatePlaybackState(boolean value) {
         playing = value;
+        publishPlaybackState();
+        refresh();
+    }
+
+    private void publishPlaybackState() {
         long actions = PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_PAUSE |
                 PlaybackStateCompat.ACTION_PLAY_PAUSE | PlaybackStateCompat.ACTION_SKIP_TO_NEXT |
                 PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
+        float speed = playing ? playbackSpeed : 0f;
         mediaSession.setPlaybackState(new PlaybackStateCompat.Builder().setActions(actions)
                 .setState(playing ? PlaybackStateCompat.STATE_PLAYING : PlaybackStateCompat.STATE_PAUSED,
-                        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 1f).build());
-        refresh();
+                        positionMs, speed).build());
     }
 
     private Notification buildNotification() {
