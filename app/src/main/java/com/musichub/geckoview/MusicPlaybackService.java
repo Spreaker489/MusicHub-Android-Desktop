@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -20,6 +21,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 public class MusicPlaybackService extends Service {
     private static final String CHANNEL = "musichub_playback";
     private static final int NOTIFICATION_ID = 71;
+    private static final String PREFS = "playback_resume";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_ARTIST = "artist";
+    private static final String KEY_POSITION = "position_ms";
     private static MusicPlaybackService instance;
     private static CommandListener listener;
     private MediaSessionCompat mediaSession;
@@ -59,6 +64,8 @@ public class MusicPlaybackService extends Service {
         title = t == null || t.isEmpty() ? "MusicHub" : t;
         artist = a == null ? "" : a;
         album = al == null ? "" : al;
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+                .putString(KEY_TITLE, title).putString(KEY_ARTIST, artist).apply();
         publishMetadata();
         refresh();
     }
@@ -82,6 +89,17 @@ public class MusicPlaybackService extends Service {
         mediaSession.setMetadata(metadata.build());
     }
 
+    public long getSavedPositionForTrack(String trackTitle, String trackArtist) {
+        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        String savedTitle = prefs.getString(KEY_TITLE, "");
+        String savedArtist = prefs.getString(KEY_ARTIST, "");
+        if (trackTitle == null || trackTitle.isEmpty() || !trackTitle.equals(savedTitle)) return -1L;
+        if (trackArtist != null && !trackArtist.isEmpty() && !savedArtist.isEmpty() &&
+                !trackArtist.equals(savedArtist)) return -1L;
+        long saved = prefs.getLong(KEY_POSITION, 0L);
+        return saved >= 5000L ? saved : -1L;
+    }
+
     public void updatePositionState(double durationSeconds, double positionSeconds, double rate) {
         if (!Double.isFinite(durationSeconds) || durationSeconds <= 0 ||
                 !Double.isFinite(positionSeconds) || positionSeconds < 0 ||
@@ -90,6 +108,7 @@ public class MusicPlaybackService extends Service {
         }
         durationMs = Math.round(durationSeconds * 1000.0);
         positionMs = Math.round(positionSeconds * 1000.0);
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putLong(KEY_POSITION, positionMs).apply();
         playbackSpeed = (float) rate;
         publishMetadata();
         publishPlaybackState();
