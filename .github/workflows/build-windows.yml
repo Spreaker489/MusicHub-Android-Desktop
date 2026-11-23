@@ -1,0 +1,93 @@
+name: Build Windows desktop
+
+on:
+  push:
+    branches: [android]
+    paths:
+      - "windows/**"
+      - "icon.png"
+      - ".github/workflows/build-windows.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "windows/**"
+      - "icon.png"
+      - ".github/workflows/build-windows.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prepare-source:
+    name: Prepare Windows source on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package Windows app source
+        uses: actions/upload-artifact@v4
+        with:
+          name: musichub-windows-source
+          path: |
+            windows/**
+            icon.png
+          if-no-files-found: error
+          retention-days: 1
+
+  build:
+    name: Windows ${{ matrix.arch }} installer
+    needs: prepare-source
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64]
+
+    defaults:
+      run:
+        working-directory: windows
+
+    steps:
+      - name: Download prepared Windows source
+        uses: actions/download-artifact@v4
+        with:
+          name: musichub-windows-source
+          path: .
+
+      - name: Verify source files
+        shell: pwsh
+        run: |
+          if (!(Test-Path "package.json")) { throw "windows/package.json is missing" }
+          if (!(Test-Path "scripts/make-icon.js")) { throw "Icon generator is missing" }
+          if (!(Test-Path "../icon.png")) { throw "Root icon.png is missing" }
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: windows/package.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Windows icon
+        run: npm run make-icon
+
+      - name: Build installer
+        run: npx electron-builder --win nsis --${{ matrix.arch }}
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: musichub-classic-windows-${{ matrix.arch }}
+          path: windows/dist/*.exe
+          if-no-files-found: error
+
+      - name: Publish installer to v1.2.1 release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/android'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload v1.2.1 dist/*.exe --clobber --repo ${{ github.repository }}
