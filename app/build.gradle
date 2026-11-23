@@ -35,6 +35,10 @@ android {
             minifyEnabled false
         }
         release {
+            // CI uses the Android debug certificate so this optimized APK can
+            // be installed for testing. Replace with a private release key
+            // before publishing to users or expecting signature-stable updates.
+            signingConfig signingConfigs.debug
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
