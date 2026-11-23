@@ -1,66 +1,57 @@
-# MusicHub V1.2.1 Gecko Android
+# MusicHub Classic – Android
 
 <p align="center">
-  <img src="icon.png" alt="MusicHub app icon" width="180">
+  <img src="icon.png" alt="MusicHub Classic" width="180">
 </p>
 
-MusicHub Classic is an Android wrapper for the MusicHub web player using Mozilla GeckoView.
+<p align="center">
+  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/download/v1.2.1/MusicHub-1.2.1-Classic-Universal.apk"><strong>⬇ Descarcă MusicHub Classic APK</strong></a>
+  ·
+  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">Toate versiunile (Releases)</a>
+</p>
 
-- Android 7.0 (API 24) or newer.
-- One universal Classic APK with ARM and x86 ABI support.
-- GeckoView adapts to phone and tablet screen sizes.
-- Foreground media service provides notification and lock-screen controls when supported by Android and the player.
-- Uses zrok's documented `skip_zrok_interstitial: 1` request header.
+**Dezvoltator:** Spreaker489  
+**Versiune:** 1.2.1  
+**Platformă:** Android  
+**Dimensiune:** aproximativ 320 MiB (335,5 MB)
 
-## Build and distribution
+### Compatibilitate
+- Android 7.0 (Nougat, API 24) sau o versiune mai recentă.
+- Compatibilă cu telefoane și tablete.
+- Interfața se adaptează dimensiunii și orientării ecranului.
 
-The `main` branch is the single source of truth. GitHub Actions builds the **Debug APK only** with `gradle assembleDebug --no-daemon --stacktrace`.
+### Despre aplicație
+MusicHub Classic aduce playerul web MusicHub într-o aplicație Android dedicată, construită cu **Mozilla GeckoView**, motor bazat pe tehnologia browserului Mozilla Firefox.
 
-On pushes to `main`, the workflow:
-1. Builds the universal Debug APK.
-2. Uploads `musichub-classic-debug` as a GitHub Actions artifact (downloaded by GitHub as a ZIP containing the APK).
-3. Replaces the APK asset in the existing GitHub Release `v1.2.1`.
+Poți asculta muzică și utiliza comenzile media din notificare și de pe ecranul de blocare, atunci când acestea sunt acceptate de player și de versiunea Android.
 
-The Release contains the `.apk` file directly, not a ZIP. The current published file is:
+### Descărcare
+APK-ul este disponibil în secțiunea [Releases](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1).
 
-- **File:** `MusicHub-1.2.1-Classic-Universal.apk`
-- **Size:** 335,524,315 bytes (about 320 MiB / 335.5 MB)
-- **Download:** [GitHub Release v1.2.1](https://github.com/Spreaker489/MusicHub-V1.2.1-Gecko/releases/tag/v1.2.1)
+---
 
-No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately for each new build; a successful CI build alone does not prove device compatibility.
+# MusicHub Classic – Android
 
-## Despre aplicație
+<p align="center">
+  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/download/v1.2.1/MusicHub-1.2.1-Classic-Universal.apk"><strong>⬇ Download MusicHub Classic APK</strong></a>
+  ·
+  <a href="https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1">All versions (Releases)</a>
+</p>
 
-MusicHub Classic aduce playerul web MusicHub într-o aplicație Android dedicată, folosind motorul Mozilla GeckoView.
+**Developer:** Spreaker489  
+**Version:** 1.2.1  
+**Platform:** Android  
+**Size:** Approximately 320 MiB (335.5 MB)
 
-Aplicația oferă comenzi media în notificare și pe ecranul de blocare, atunci când playerul și versiunea Android le permit. Proiectul folosește `minSdk 24` (Android 7.0 sau mai nou).
+### Compatibility
+- Android 7.0 (Nougat, API 24) or later.
+- Compatible with smartphones and tablets.
+- The interface adapts to the device's screen size and orientation.
 
-**Ediție:** MusicHub Classic – APK universal  
-**Versiune documentată:** 1.2.1  
-**Dezvoltator:** marius_489_spk
+### About the app
+MusicHub Classic brings the MusicHub web player into a dedicated Android app, built with **Mozilla GeckoView**, an engine based on the technology used by the Mozilla Firefox browser.
 
-### Compilare și distribuție
+You can listen to music and use media controls from the notification and lock screen, where supported by the player and Android version.
 
-Ramura `main` este sursa unică de cod. GitHub Actions compilează numai varianta **Debug**. La fiecare push pe `main`, workflow-ul compilează APK-ul universal, îl încarcă drept artefact Actions (`musichub-classic-debug`; descărcarea Actions este un ZIP care conține APK-ul) și înlocuiește APK-ul din Release-ul existent `v1.2.1`.
-
-În Release este publicat fișierul `.apk` direct, nu arhiva ZIP. APK-ul publicat în prezent are **335.524.315 bytes** (aproximativ **320 MiB / 335,5 MB**).
-
-Nu se execută build Release, R8 shrinking sau optimizări pentru reducerea dimensiunii. Un build CI reușit nu înlocuiește testarea pe dispozitive fizice.
-
-## About the app
-
-MusicHub Classic brings the MusicHub web player into a dedicated Android application powered by Mozilla GeckoView.
-
-The app provides media controls in the notification and on the lock screen when supported by the player and Android version. The project uses `minSdk 24` (Android 7.0 or newer).
-
-**Edition:** MusicHub Classic – universal APK  
-**Documented version:** 1.2.1  
-**Developer:** marius_489_spk
-
-### Build and distribution
-
-The `main` branch is the single source of truth. GitHub Actions builds the **Debug** variant only. On each push to `main`, the workflow builds the universal APK, uploads it as the `musichub-classic-debug` Actions artifact (downloaded as a ZIP containing the APK), and replaces the APK asset in the existing `v1.2.1` Release.
-
-The Release contains the `.apk` file directly, not a ZIP. The currently published APK is **335,524,315 bytes** (about **320 MiB / 335.5 MB**).
-
-No Release build, R8 shrinking, or APK size optimization is performed. A successful CI build does not replace physical-device testing.
+### Download
+The APK is available in the [Releases](https://github.com/Spreaker489/MusicHub-Android-Desktop/releases/tag/v1.2.1) section of this GitHub repository.
