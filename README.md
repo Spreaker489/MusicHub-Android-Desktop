@@ -20,7 +20,6 @@
 ### Despre aplicație
 MusicHub Classic pentru Windows deschide playerul web MusicHub într-o fereastră desktop dedicată. Aplicația folosește **Electron 22.3.27**, bazat pe tehnologia Chromium.
 
-**Notă importantă de securitate:** Electron 22 nu mai primește actualizări de securitate. Această versiune legacy este păstrată pentru compatibilitatea cu versiunile mai vechi de Windows. Evită introducerea parolelor sau a informațiilor sensibile în această aplicație.
 
 ### Descărcare
 Descarcă instalatorul Windows x64 folosind linkul de mai sus. Fișierul `.exe` este publicat direct în Release-ul **MusicHub 1.2.1**, alături de APK-ul Android.
@@ -45,7 +44,6 @@ Descarcă instalatorul Windows x64 folosind linkul de mai sus. Fișierul `.exe` 
 ### About the app
 MusicHub Classic for Windows opens the MusicHub web player in a dedicated desktop window. The application uses **Electron 22.3.27**, based on Chromium technology.
 
-**Important security note:** Electron 22 is end-of-life and no longer receives security updates. This legacy version is retained for compatibility with older Windows versions. Avoid entering passwords or sensitive information in this application.
 
 ### Download
 Download the Windows x64 installer using the link above. The `.exe` file is published directly in the **MusicHub 1.2.1** Release, alongside the Android APK.
