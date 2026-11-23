@@ -14,7 +14,7 @@ The stable source is maintained on the `main` branch. GitHub Actions builds the 
 
 On every push to `main`, the workflow builds the APK, publishes it as a GitHub Actions artifact, and replaces the asset in the existing GitHub Release `v1.2.1`. The Release receives the `.apk` file itself, not the Actions artifact ZIP.
 
-The published file is named `MusicHub-1.2.1-Classic-Universal.apk`. No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately.
+The published file is named `MusicHub-1.2.1-Classic-Universal.apk`. Each Release note records the generated APK size in both human-readable units and exact bytes. No Release build, R8 shrinking, or APK size optimization is performed. Physical-device behavior must be tested separately.
 
 ## Despre aplicație
 
@@ -28,7 +28,7 @@ Aplicația oferă comenzi media în notificare și pe ecranul de blocare, atunci
 
 ### Compilare și distribuție
 
-Workflow-ul GitHub Actions compilează numai varianta Debug. La fiecare actualizare pe `main`, APK-ul este publicat ca artefact și înlocuiește fișierul APK din Release-ul existent `v1.2.1`. În Release se încarcă fișierul `.apk` direct, nu arhiva ZIP. Nu se execută build Release sau optimizări de dimensiune.
+Workflow-ul GitHub Actions compilează numai varianta Debug. La fiecare actualizare pe `main`, APK-ul este publicat ca artefact și înlocuiește fișierul APK din Release-ul existent `v1.2.1`. În Release se încarcă fișierul `.apk` direct, nu arhiva ZIP. Notele Release afișează dimensiunea APK-ului în format lizibil și în bytes. Nu se execută build Release sau optimizări de dimensiune.
 
 ## About the app
 
@@ -42,4 +42,4 @@ The app provides media controls in the notification and on the lock screen when 
 
 ### Build and distribution
 
-GitHub Actions builds the Debug variant only. On each update to `main`, the APK is published as a workflow artifact and replaces the APK file in the existing `v1.2.1` Release. The Release receives the `.apk` file directly, not the Actions artifact ZIP. No Release build or APK size optimization is performed.
+GitHub Actions builds the Debug variant only. On each update to `main`, the APK is published as a workflow artifact and replaces the APK file in the existing `v1.2.1` Release. The Release receives the `.apk` file directly, not the Actions artifact ZIP. Release notes show the APK size in readable units and exact bytes. No Release build or APK size optimization is performed.
